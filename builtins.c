@@ -41,10 +41,13 @@ int cmd_exit(int ac, char **av, sh_t *sh)
         my_puts("exit");
     sh->eof = true;
     if (ac == 1)
-        return sh_setexc(sh, 0);
+        exit(sh->exc);
     else if (ac == 2)
-        return sh_setexc(sh, my_atoll((const char *)av[1]));
-    return !sh_setexc(sh, INT_MAX);
+        exit(my_atoll((const char *)av[1]));
+    else {
+        my_fputs("exit: Expression Syntax.", STDERR_FILENO);
+        return sh_setexc(sh, 1);
+    }
 }
 
 int cmd_cd(int ac, char **av, sh_t *sh)

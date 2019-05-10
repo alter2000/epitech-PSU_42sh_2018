@@ -33,6 +33,13 @@ enum MYSH_TOKEN {
 };
 typedef enum MYSH_TOKEN token_t;
 
+enum cmd_state {
+    STATE_QUOTE,
+    STATE_DQUOTE,
+    STATE_ESEQ,
+    STATE_GENERAL,
+};
+
 typedef struct dict {
     struct dict *next;
     char *k;
@@ -40,6 +47,8 @@ typedef struct dict {
 } dict_t;
 
 typedef struct redir {
+    char *name;
+    int flags;
     int in[2];
     int out[2];
     int err[2];
@@ -47,6 +56,8 @@ typedef struct redir {
 
 typedef struct sh {
     dict_t *env;
+    dict_t *shvar;
+    dict_t *alias;
     redir_t fdt;
     unsigned char exc;
     bool eof;
@@ -70,6 +81,7 @@ typedef struct item {
 typedef struct ast {
     token_t type;
     char *name;
+    cmd_t *cmd;
     struct ast *left;
     struct ast *right;
 } ast_t;

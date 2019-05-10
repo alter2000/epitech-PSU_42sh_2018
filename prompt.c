@@ -26,9 +26,9 @@ int sh_setexc(sh_t *sh, int c)
     return sh->exc;
 }
 
-cmd_t *prompt(sh_t *sh)
+ast_t *prompt(sh_t *sh)
 {
-    cmd_t *cmd;
+    ast_t *ast;
     char *in;
 
     if (isatty(STDOUT_FILENO))
@@ -38,8 +38,7 @@ cmd_t *prompt(sh_t *sh)
         cmd_exit(1, 0, sh);
     if (isatty(STDOUT_FILENO))
         my_puts("");
-    parse(in);
-    cmd = mkcmd(sh, str_to_tab(in, " \t\n"));
+    ast = mkast(in, sh);
     free(in);
-    return cmd;
+    return ast;
 }

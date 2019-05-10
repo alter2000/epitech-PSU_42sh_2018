@@ -7,62 +7,59 @@
 
 #include "shell.h"
 
-static const cmd_t builtins[] = {
-    { "setenv",   cmd_setenv,   0, 0, 0 },
-    { "unsetenv", cmd_unsetenv, 0, 0, 0 },
-    { "env",      cmd_env,      0, 0, 0 },
-    { "cd",       cmd_cd,       0, 0, 0 },
-    { "exit",     cmd_exit,     0, 0, 0 },
-    { 0, 0, 0, 0, 0 }
+const redir_t redirs[] = {
+    {"<", O_RDONLY, {-1, -1}, {-1, -1}, {-1, -1}},
+    {">", O_WRONLY | O_CREAT | O_TRUNC, {-1, -1}, {-1, -1}, {-1, -1}},
+    {">>", O_WRONLY | O_CREAT | O_APPEND, {-1, -1}, {-1, -1}, {-1, -1}},
+    {"2>", O_WRONLY | O_CREAT | O_TRUNC, {-1, -1}, {-1, -1}, {-1, -1}},
+    {"2>>", O_WRONLY | O_CREAT | O_APPEND, {-1, -1}, {-1, -1}, {-1, -1}},
+    {0, 0, {-1, -1}, {-1, -1}, {-1, -1}},
 };
 
-const redir_t redirs[] = {};
+static const char *builtin_aliases[] = {
+    "ls='ls --color=auto'",
+0};
 
 static void sighandle(int sig)
 {
-    if (sig != SIGINT && sig != SIGSTOP)
+    if (sig != SIGINT && sig != SIGSTOP && sig != SIGQUIT)
         return;
-    my_printf("\n%s", SHELL_PS1);
+    if (isatty(STDOUT_FILENO))
+        my_printf("\n%s", SHELL_PS1);
 }
 
 static int noninteractive(int ac, char **av, sh_t *sh)
 {
-    cmd_t *cmd;
+    ast_t *p;
 
     for (int i = 1; i < ac; i++) {
-        parse(av[i]);
-        char **p = str_to_tab(av[i], " \t\n");
+        p = parse(mkast(av[i], sh));
         show_tab((char const **)p, "");
-        cmd = mkcmd(sh, p);
-        if (!cmd_builtins(cmd, builtins) && cmd->ac)
-            cmd_exec(cmd);
-        rmcmd(cmd);
     }
     return sh->exc;
 }
 
 static int loop(int ac, char **av, sh_t *sh)
 {
-    cmd_t *curcmd;
+    ast_t *curast;
 
     signal(SIGINT, sighandle);
     signal(SIGSTOP, sighandle);
     signal(SIGQUIT, sighandle);
     if (ac > 1)
-        noninteractive(ac, av, sh);
+        return noninteractive(ac, av, sh);
     while (!sh->eof) {
-        curcmd = prompt(sh);
-        if (!cmd_builtins(curcmd, builtins) && curcmd->ac)
-            cmd_exec(curcmd);
-        rmcmd(curcmd);
+        curast = prompt(sh);
+        parse(curast);
+        rmast(curast);
     }
     return sh->exc;
 }
 
 int main(int ac, char **av, char **env)
 {
-    sh_t sh = {mkdict(env), \
-        {{0, O_RDONLY}, {1, O_WRONLY}, {2, O_WRONLY}}, \
+    sh_t sh = {mkdict(env), NULL, mkdict((char **)builtin_aliases), \
+        {0, 0, {0, O_RDONLY}, {1, O_WRONLY}, {2, O_WRONLY}}, \
         0, false};
     int ret = loop(ac, av, &sh);
 

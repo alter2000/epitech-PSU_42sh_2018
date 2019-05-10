@@ -7,14 +7,14 @@
 
 #include "shell.h"
 
-char *env_get_key(char *s)
+char *env_get_key(char const *s)
 {
     int idx = is_in('=', s);
 
     return idx == -1 ? 0 : my_strncpy(gib(sizeof(char) * (idx + 1)), s, idx);
 }
 
-char *env_get_val(char *s)
+char *env_get_val(char const *s)
 {
     int idx = is_in('=', s);
 

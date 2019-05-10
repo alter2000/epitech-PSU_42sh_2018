@@ -60,18 +60,18 @@ char  *dict_pop(dict_t **d, char const *key)
 
 dict_t *dict_push(dict_t *d, char *key, char *val)
 {
-    dict_t *tmp;
+    dict_t *tmp = d;
 
-    for (tmp = d; tmp && tmp->next; tmp = tmp->next)
+    if (!tmp)
+        return 0;
+    for (; tmp->next; tmp = tmp->next)
         if (!my_strcmp(tmp->next->k, key)) {
             free(tmp->next->v);
             tmp->next->v = val;
             return tmp->next;
         }
-    if (tmp) {
-        tmp->next = gib(sizeof(*tmp));
-        tmp->next->k = key;
-        tmp->next->v = val;
-    }
+    tmp->next = gib(sizeof(*tmp));
+    tmp->next->k = key;
+    tmp->next->v = val;
     return tmp->next;
 }
