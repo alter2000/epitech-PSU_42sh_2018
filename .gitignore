@@ -1,0 +1,14 @@
+**/*.o
+**/*.gc*
+**/libmy.a
+**/vgcore*
+
+42sh
+unit_tests
+
+idk*
+**/*.out
+tags
+data
+.#*#
+*~
