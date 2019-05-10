@@ -20,7 +20,7 @@ cmd_t *mkcmd(sh_t *sh, char **c)
     cmd_t *cmd = gib(sizeof(*cmd));
 
     cmd->av = c;
-    cmd->ac = my_tablen((char const **)cmd->av);
+    cmd->ac = my_tablen(cmd->av);
     cmd->sh = sh;
     cmd->name = my_strdup(cmd->av ? *cmd->av : "NONECMD");
     return cmd;

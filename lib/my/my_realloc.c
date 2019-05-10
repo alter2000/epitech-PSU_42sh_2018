@@ -23,7 +23,7 @@ void *regib(char *s, int extra)
     return (void *)my_realloc(s, extra);
 }
 
-size_t my_tablen(char const **t)
+size_t my_tablen(char **t)
 {
     size_t i;
 

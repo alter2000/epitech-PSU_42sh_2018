@@ -30,6 +30,23 @@ char **str_to_tab(char * const str, char const *cmp)
     return arr;
 }
 
+char *tab_to_str(char ** const tab, char const *sep, \
+                char const *begin, char const *end)
+{
+    char *str = my_strdup(begin);
+
+    if (!tab || !*tab)
+        return 0;
+    if (!sep)
+        sep = " ";
+    str = my_strcat(regib(str, my_strlen(*tab)), *tab);
+    for (size_t i = 1; tab[i]; i++)
+        str = my_strcat(my_strcat(regib(str, \
+                my_strlen(tab[i]) + my_strlen(sep)), sep), tab[i]);
+    str = my_strcat(regib(str, my_strlen(end)), end);
+    return str;
+}
+
 int show_tab(char const **tab, char const *sep)
 {
     int res = 0;

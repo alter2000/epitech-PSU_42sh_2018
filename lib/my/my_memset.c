@@ -27,13 +27,20 @@ void *gib(size_t n)
 
 void *my_memcpy(void *dest, const void *src, size_t n)
 {
-    size_t i = 0;
     char *t1 = (char *)dest;
     char *t2 = (char *)src;
 
     if (!t2 || n < 1)
         return 0;
-    for (; i < n; i++)
+    for (size_t i = 0; i < n; i++)
         t1[i] = t2[i];
+    return dest;
+}
+
+void *my_memmove(void *dest, const void *src, size_t n)
+{
+    unsigned char tmp[n];
+    my_memcpy(tmp, src, n);
+    my_memcpy(dest, tmp, n);
     return dest;
 }

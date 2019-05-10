@@ -12,8 +12,10 @@ char *my_strcat(char *dest, char const *src)
     size_t i;
     char *len = dest + my_strlen(dest);
 
-    if (!dest || !src)
+    if (!dest)
         return 0;
+    if (!src)
+        return dest;
     for (i = 0; src[i]; i++)
         len[i] = src[i];
     len[i] = 0;

@@ -155,8 +155,9 @@ int my_isspace(char);
 int my_isprintable(char);
 
 char **str_to_tab(char * const, char const *);
+char *tab_to_str(char ** const, char const *, char const *, char const *);
 int show_tab(char const **, char const *);
-size_t my_tablen(char const **);
+size_t my_tablen(char **);
 void free_array(char **);
 char *my_strdup(char const *);
 char *my_strndup(char *, size_t );
@@ -165,6 +166,7 @@ char *my_realloc(char *, int);
 void *gib(size_t);
 void *regib(char *, int);
 void *my_memcpy(void *, const void *, size_t);
+void *my_memmove(void *, const void *, size_t);
 
 char *my_strtok(char *, char const *);
 char *my_strsep(char **p, char const *);
