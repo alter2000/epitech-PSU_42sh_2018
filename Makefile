@@ -9,7 +9,7 @@ NAME=42sh
 CFLAGS+= -Werror -Wall -I./include -L./lib/my -lmy
 DFLAGS+= -Wall -I./include -L./lib/my -lmy -g
 DFLAGS+= -fsanitize=address
-SRC=$(wildcard *.c)
+SRC=$(wildcard src/*.c)
 OBJ=$(SRC:.c=.o)
 
 all: $(NAME)
