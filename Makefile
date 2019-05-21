@@ -9,7 +9,14 @@ NAME=42sh
 CFLAGS+= -Werror -Wall -I./include -L./lib/my -lmy
 DFLAGS+= -Wall -I./include -L./lib/my -lmy -g
 DFLAGS+= -fsanitize=address
-SRC=$(wildcard ./*.c)
+
+SRC= ./main.c ./path.c ./prompt.c ./dict.c \
+	 ./builtins/aliases.c ./builtins/bi_env.c ./builtins/cd.c \
+	 ./builtins/env.c ./builtins/jobs.c \
+	 ./cmd/cmd.c ./cmd/exec_cmd.c \
+	./lexer/ast_cons.c \
+	./parser/parse.c
+
 OBJ=$(SRC:.c=.o)
 
 all: $(NAME)

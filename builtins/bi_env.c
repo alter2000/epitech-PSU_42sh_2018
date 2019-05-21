@@ -35,37 +35,6 @@ int cmd_unsetenv(int ac, char **av, sh_t *sh)
     return sh_setexc(sh, 0);
 }
 
-int cmd_exit(int ac, char **av, sh_t *sh)
-{
-    if (isatty(STDOUT_FILENO))
-        my_puts("exit");
-    sh->eof = true;
-    if (ac == 1)
-        exit(sh->exc);
-    else if (ac == 2)
-        exit(my_atoll((const char *)av[1]));
-    else {
-        my_fputs("exit: Expression Syntax.", STDERR_FILENO);
-        return sh_setexc(sh, 1);
-    }
-}
-
-int cmd_cd(int ac, char **av, sh_t *sh)
-{
-    char up[PATH_MAX * 2] = {0};
-
-    if (ac == 1 || (ac == 2 && !my_strcmp(av[1], "~")))
-        return change_cwd(sh, dict_get(sh->env, "HOME"));
-    if (ac > 2)
-        return !my_fputs("cd: Too many arguments.", STDERR_FILENO);
-    if (!my_strcmp(av[1], "-"))
-        return change_cwd(sh, dict_get(sh->env, "OLDPWD"));
-    if (*av[1] == '~' && av[1][1] && av[1][2])
-        return change_cwd(sh, my_strcat(my_strcat(my_strcat(up, \
-                        dict_get(sh->env, "HOME")), "/"), av[1] + 2));
-    return change_cwd(sh, av[1]);
-}
-
 int cmd_env(int ac, char **av, sh_t *sh)
 {
     for (dict_t *d = sh->env; d; d = d->next)

@@ -7,7 +7,7 @@
 
 CFLAGS=-Wall -Werror -I./ -I./my_printf
 DFLAGS=-Wall -I./ -I./my_printf
-SRC=$(shell find . -type f -name '*.c') $(shell find ./my_printf -type f -name '*.c')
+SRC=$(shell find . -type f -name '*.c')
 OBJ=$(SRC:.c=.o)
 
 all: link

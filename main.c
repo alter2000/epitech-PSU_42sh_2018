@@ -28,11 +28,18 @@ static void sighandle(int sig)
         my_printf("\n%s", SHELL_PS1);
 }
 
+static void sig_init(void)
+{
+    signal(SIGINT, sighandle);
+    signal(SIGSTOP, sighandle);
+    signal(SIGQUIT, sighandle);
+}
+
 static int noninteractive(int ac, char **av, sh_t *sh)
 {
     ast_t *p;
 
-    for (int i = 1; i < ac; i++) {
+    for (int i = 2; i < ac; i++) {
         p = parse(mkast(av[i], sh));
         show_tab((char const **)p, "");
     }
@@ -43,11 +50,11 @@ static int loop(int ac, char **av, sh_t *sh)
 {
     ast_t *curast;
 
-    signal(SIGINT, sighandle);
-    signal(SIGSTOP, sighandle);
-    signal(SIGQUIT, sighandle);
-    if (ac > 1)
+    sig_init();
+    if (ac > 1 && !my_strcmp(av[1], "-c"))
         return noninteractive(ac, av, sh);
+    if (!dict_get(sh->env, "PATH"))
+        cmd_setenv(3, DEFAULT_PATH, sh);
     while (!sh->eof) {
         curast = prompt(sh);
         parse(curast);

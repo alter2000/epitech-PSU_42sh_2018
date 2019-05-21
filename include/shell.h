@@ -29,6 +29,7 @@ int cmd_cd(int, char **, sh_t *);
 int cmd_exit(int, char **, sh_t *);
 int cmd_alias(int, char **, sh_t *);
 int cmd_unalias(int, char **, sh_t *);
+int cmd_jobs(int, char **, sh_t *);
 
 /* Builtin helpers */
 int change_cwd(sh_t *, char *);

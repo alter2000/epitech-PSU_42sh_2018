@@ -11,6 +11,9 @@
     #include <stddef.h>
     #include <stdbool.h>
 
+    #define DEFAULT_PATH ((char *[]) \
+            {"setenv", "PATH", "/bin:/usr/bin:/usr/local/bin:/usr/sbin", 0})
+
     #define FOREACH_TOKEN(TOK) \
         TOK(SEQ) \
         TOK(QUOTE) \
@@ -45,6 +48,19 @@ typedef struct dict {
     char *k;
     char *v;
 } dict_t;
+
+typedef struct job {
+    char *cmd;
+    int pid;
+    struct job *next;
+    struct job *prev;
+} job_t;
+
+typedef struct joblist {
+    struct joblist *first;
+    struct joblist *last;
+    int cnt;
+} joblist_t;
 
 typedef struct redir {
     char *name;
