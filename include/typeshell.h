@@ -75,6 +75,7 @@ typedef struct sh {
     dict_t *shvar;
     dict_t *alias;
     redir_t fdt;
+    int infd;
     unsigned char exc;
     bool eof;
 } sh_t;

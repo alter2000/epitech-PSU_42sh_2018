@@ -41,3 +41,16 @@ int cmd_env(int ac, char **av, sh_t *sh)
         my_printf("%s=%s\n", d->k, d->v);
     return sh_setexc(sh, 0);
 }
+
+bool setenv_is_sane(char const *val)
+{
+    if (!my_isupper(*val) && !my_islower(*val))
+        return !my_fputs("setenv: Variable name must begin with a letter", \
+                STDERR_FILENO);
+    for (; val && *val; val++)
+        if (!(my_isalpha(*val) || my_isdigit(*val) \
+                || *val == '.' || *val == '_' || *val == '/'))
+            return !my_fputs("setenv: Variable name must contain "
+                            "alphanumeric characters", STDERR_FILENO);
+    return true;
+}

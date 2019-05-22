@@ -46,6 +46,9 @@ char **env_to_tab(dict_t *);
 ast_t *prompt(sh_t *);
 bool setenv_is_sane(char const *);
 int sh_setexc(sh_t *, int);
+int noninteractive(int, char **, sh_t *);
+int loop(sh_t *);
+void infile(char *, sh_t *);
 
 /* All parsing functions */
 
