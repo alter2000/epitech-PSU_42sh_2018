@@ -37,3 +37,10 @@ bool cmd_builtins(cmd_t *cmd, cmd_t const *bi)
         }
     return false;
 }
+
+void rmsh(sh_t *sh)
+{
+    rmdict(sh->env);
+    rmdict(sh->alias);
+    rmdict(sh->shvar);
+}

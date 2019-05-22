@@ -18,12 +18,12 @@ ast_t *prompt(sh_t *sh)
     ast_t *ast;
     char *in;
 
-    if (isatty(STDOUT_FILENO))
+    if (isatty(sh->infd) && isatty(STDOUT_FILENO))
         my_putstr(SHELL_PS1);
     in = getl(sh->infd);
     if (!in)
         cmd_exit(1, 0, sh);
-    if (isatty(STDOUT_FILENO))
+    if (isatty(sh->infd) && isatty(STDOUT_FILENO))
         my_puts("");
     ast = mkast(in, sh);
     free(in);
@@ -34,12 +34,14 @@ int noninteractive(int ac, char **av, sh_t *sh)
 {
     ast_t *p;
 
-    if (ac >= 3 && !my_strcmp(av[1], "-c")) {
+    if (ac >= 2 && !my_strcmp(av[1], "-c")) {
+        if (ac == 2)
+            return sh->exc;
         p = parse(mkast(av[2], sh));
         show_tab((char const **)p, "");
         rmast(p);
-    } else if (ac == 2)
-        infile(av[1], sh);
+    }
+    infile(av[1], sh);
     return sh->exc;
 }
 

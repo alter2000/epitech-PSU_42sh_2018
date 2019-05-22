@@ -49,6 +49,7 @@ int sh_setexc(sh_t *, int);
 int noninteractive(int, char **, sh_t *);
 int loop(sh_t *);
 void infile(char *, sh_t *);
+void rmsh(sh_t *);
 
 /* All parsing functions */
 

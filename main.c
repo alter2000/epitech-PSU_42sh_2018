@@ -45,7 +45,6 @@ int main(int ac, char **av, char **env)
     sig_init();
     if (ac > 1)
         return noninteractive(ac, av, &sh);
-    ret  = loop(&sh);
-    rmdict(sh.env);
+    ret = loop(&sh);
     return ret;
 }
