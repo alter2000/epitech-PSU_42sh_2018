@@ -20,7 +20,7 @@ int cmd_alias(int ac, char **av, sh_t *sh)
         case 3: dict_push(sh->alias, my_strdup(av[1]), my_strdup(av[2]));
             return sh_setexc(sh, 0);
         default: dict_push(sh->alias, my_strdup(av[1]), \
-                         tab_to_str(&av[2], " ", "(", ")"));
+                        tab_to_str(&av[2], " ", "(", ")"));
             return sh_setexc(sh, 0);
     }
 }

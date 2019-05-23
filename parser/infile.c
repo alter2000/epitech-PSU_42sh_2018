@@ -9,7 +9,7 @@
 
 void infile(char *sp, sh_t *sh)
 {
-    int fd = open(sp, O_RDONLY);
+    FILE *fd = fopen(sp, "r");
 
     if (fd < 0) {
         my_vfputstr(STDERR_FILENO, 3, "42sh: ", sp, ": No such file or "
@@ -20,7 +20,7 @@ void infile(char *sp, sh_t *sh)
     sh->infd = fd;
     loop(sh);
     rmsh(sh);
-    if (close(fd)) {
+    if (fclose(fd)) {
         perror("42sh");
         exit(84);
     }

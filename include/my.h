@@ -173,7 +173,7 @@ char *my_strsep(char **p, char const *);
 size_t my_strpn(char const *, char const *, bool);
 
 char *getl(int const);
-char *getd(int const, int const);
+char *gnugetl(FILE *);
 
 size_t err(char const *);
 size_t errb(char const *);

@@ -65,12 +65,16 @@ char *get_next_delim(const int fd, const int ch)
     }
 }
 
-char *getd(const int fd, const int c)
-{
-    return get_next_delim(fd, c);
-}
-
 char *getl(const int fd)
 {
     return get_next_delim(fd, '\n');
+}
+
+char *gnugetl(FILE *fd)
+{
+    size_t n = 0;
+    char *buf = 0;
+    ssize_t ret = getline(&buf, &n, fd);
+
+    return (ret < 0) ? 0 : buf;
 }
