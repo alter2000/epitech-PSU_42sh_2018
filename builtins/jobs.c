@@ -9,7 +9,7 @@
 
 int cmd_exit(int ac, char **av, sh_t *sh)
 {
-    if (isatty(sh->infd) && isatty(STDOUT_FILENO))
+    if (isatty(fileno(sh->infd)) && isatty(STDOUT_FILENO))
         my_puts("exit");
     sh->eof = true;
     if (ac == 1)

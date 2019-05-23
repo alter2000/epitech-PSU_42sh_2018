@@ -33,7 +33,7 @@ int main(int ac, char **av, char **env)
 {
     sh_t sh = {mkdict(env), NULL, mkdict((char **)builtin_aliases), \
         {0, 0, {0, O_RDONLY}, {1, O_WRONLY}, {2, O_WRONLY}}, \
-        STDIN_FILENO, 0, false};
+        stdin, 0, false};
     int ret;
 
     sig_init();

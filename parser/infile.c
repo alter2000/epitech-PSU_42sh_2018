@@ -11,7 +11,7 @@ void infile(char *sp, sh_t *sh)
 {
     FILE *fd = fopen(sp, "r");
 
-    if (fd < 0) {
+    if (!fd) {
         my_vfputstr(STDERR_FILENO, 3, "42sh: ", sp, ": No such file or "
                 "directory\n");
         rmsh(sh);
