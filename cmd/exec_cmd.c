@@ -5,7 +5,6 @@
 ** something small
 */
 
-#include <sys/wait.h>
 #include <string.h>
 #include "shell.h"
 

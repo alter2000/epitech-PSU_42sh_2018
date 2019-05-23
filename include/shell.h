@@ -9,6 +9,7 @@
     #define SHELL_H
 
     #include <signal.h>
+    #include <sys/wait.h>
     #include "my.h"
     #include "typeshell.h"
 
@@ -62,5 +63,11 @@ ast_t *parse(ast_t *);
 cmd_t *mkcmd(sh_t *, char **);
 void rmcmd(cmd_t *);
 bool cmd_builtins(cmd_t *, cmd_t const *);
+
+
+static inline bool esc(char *str, int idx)
+{
+    return idx != 0 && str[idx - 1] == '\\';
+}
 
 #endif

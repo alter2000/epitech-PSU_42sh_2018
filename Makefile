@@ -6,7 +6,9 @@
 ##
 
 NAME=42sh
-CFLAGS+= -Werror -Wall -I./include -L./lib/my -lmy
+CFLAGS+= -Werror -Wall -I./include
+LDFLAGS= -L./lib/my -lmy
+
 DFLAGS+= -Wall -I./include -L./lib/my -lmy -g
 DFLAGS+= -fsanitize=address
 
@@ -23,7 +25,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ) ./include/my.h ./include/typeshell.h ./include/shell.h
 	@$(MAKE) -C ./lib/my
-	@gcc -o $(NAME) $(OBJ) $(CFLAGS)
+	@gcc -o $(NAME) $(OBJ) $(CFLAGS) $(LDFLAGS)
 
 debug: $(SRC) ./include/my.h ./include/typeshell.h ./include/shell.h
 	@$(MAKE) -C ./lib/my debug
