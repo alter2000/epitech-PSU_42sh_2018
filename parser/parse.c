@@ -21,8 +21,9 @@ static const cmd_t builtins[] = {
 
 ast_t *parse(ast_t *ast)
 {
+    if (!ast)
+        return 0;
     if (!cmd_builtins(ast->cmd, builtins) && ast->cmd->ac)
         cmd_exec(ast->cmd);
-    rmcmd(ast->cmd);
-    return 0;
+    return ast;
 }

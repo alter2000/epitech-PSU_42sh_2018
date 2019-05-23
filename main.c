@@ -7,25 +7,19 @@
 
 #include "shell.h"
 
-const redir_t redirs[] = {
-    {"<", O_RDONLY, {-1, -1}, {-1, -1}, {-1, -1}},
-    {">", O_WRONLY | O_CREAT | O_TRUNC, {-1, -1}, {-1, -1}, {-1, -1}},
-    {">>", O_WRONLY | O_CREAT | O_APPEND, {-1, -1}, {-1, -1}, {-1, -1}},
-    {"2>", O_WRONLY | O_CREAT | O_TRUNC, {-1, -1}, {-1, -1}, {-1, -1}},
-    {"2>>", O_WRONLY | O_CREAT | O_APPEND, {-1, -1}, {-1, -1}, {-1, -1}},
-    {0, 0, {-1, -1}, {-1, -1}, {-1, -1}},
-};
-
 static const char * const builtin_aliases[] = {
     "ls='ls --color=auto'",
 0};
 
 static void sighandle(int sig)
 {
+    int st = 0;
+
     if (sig != SIGINT && sig != SIGSTOP && sig != SIGQUIT)
         return;
-    if (isatty(STDOUT_FILENO))
-        my_printf("\n%s", SHELL_PS1);
+    my_puts("");
+    if (waitpid(-1, &st, WNOHANG) == -1 && isatty(STDOUT_FILENO))
+        my_putstr(SHELL_PS1);
 }
 
 static void sig_init(void)
@@ -46,5 +40,6 @@ int main(int ac, char **av, char **env)
     if (ac > 1)
         return noninteractive(ac, av, &sh);
     ret = loop(&sh);
+    rmsh(&sh);
     return ret;
 }

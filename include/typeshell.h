@@ -10,31 +10,22 @@
 
     #include <stddef.h>
     #include <stdbool.h>
+    #include <fcntl.h>
 
     #define DEFAULT_PATH ((char *[]) \
             {"setenv", "PATH", "/bin:/usr/bin:/usr/local/bin:/usr/sbin", 0})
 
-    #define FOREACH_TOKEN(TOK) \
-        TOK(SEQ) \
-        TOK(QUOTE) \
-        TOK(DQUOTE) \
-        TOK(PIPE) \
-        TOK(REDIR) \
-        TOK(REDIR_A) \
-        TOK(SEMICOLON) \
-        TOK(WHILE) \
-        TOK(FOR) \
-        TOK(IF) \
-        TOK(COLON) \
-
-    #define GEN_TOKEN(ENUM) ENUM,
-    #define STR(STRING) #STRING,
-    #define XSTR(STRING) STR(STRING)
-
-enum MYSH_TOKEN {
-    FOREACH_TOKEN(GEN_TOKEN)
-};
-typedef enum MYSH_TOKEN token_t;
+typedef enum MYSHTOK {
+    T_SEMICOLON,
+    T_BINOP_AND,
+    T_BINOP_OR,
+    T_REDIR_OUT,
+    T_REDIR_IN,
+    T_EXEC,
+    T_QUOTE,
+    T_DQUOTE,
+    T_BACKTICK
+} token_t;
 
 enum cmd_state {
     STATE_QUOTE,
@@ -70,12 +61,21 @@ typedef struct redir {
     int err[2];
 } redir_t;
 
+static const redir_t redirs[] = {
+    {"<", O_RDONLY, {-1, -1}, {-1, -1}, {-1, -1}},
+    {">", O_WRONLY | O_CREAT | O_TRUNC, {-1, -1}, {-1, -1}, {-1, -1}},
+    {">>", O_WRONLY | O_CREAT | O_APPEND, {-1, -1}, {-1, -1}, {-1, -1}},
+    {"2>", O_WRONLY | O_CREAT | O_TRUNC, {-1, -1}, {-1, -1}, {-1, -1}},
+    {"2>>", O_WRONLY | O_CREAT | O_APPEND, {-1, -1}, {-1, -1}, {-1, -1}},
+    {0, 0, {-1, -1}, {-1, -1}, {-1, -1}},
+};
+
 typedef struct sh {
     dict_t *env;
     dict_t *shvar;
     dict_t *alias;
     redir_t fdt;
-    int infd;
+    FILE *infd;
     unsigned char exc;
     bool eof;
 } sh_t;
