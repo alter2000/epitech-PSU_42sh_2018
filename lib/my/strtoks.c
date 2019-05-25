@@ -32,7 +32,8 @@ char *my_strsep(char ** const p, char const *cmp)
         return 0;
     for (; **p && is_in(**p, cmp) != -1; (*p)++);
     for (; (*p)[n] && is_in((*p)[n], cmp) == -1; n++);
-    ret = my_strndup(*p, n);
+    if (n)
+        ret = my_strndup(*p, n);
     *p += n;
     return ret;
 }

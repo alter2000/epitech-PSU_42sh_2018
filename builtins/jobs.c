@@ -12,8 +12,10 @@ int cmd_exit(int ac, char **av, sh_t *sh)
     if (isatty(fileno(sh->infd)) && isatty(STDOUT_FILENO))
         my_puts("exit");
     sh->eof = true;
-    if (ac == 1)
+    if (ac == 1) {
+        rmsh(sh);
         exit(sh->exc);
+    }
     else if (ac == 2)
         exit(my_atoll((const char *)av[1]));
     else {
