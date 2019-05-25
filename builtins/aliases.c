@@ -27,8 +27,16 @@ int cmd_alias(int ac, char **av, sh_t *sh)
 
 int cmd_unalias(int ac, char **av, sh_t *sh)
 {
-    if (sh->alias)
-        for (int i = 1; i < ac; i++)
-            dict_pop(&sh->alias, av[i]);
+    if (ac < 2) {
+        my_fputs("unalias: Too few arguments.", STDERR_FILENO);
+        return sh_setexc(sh, 1);
+    } else if (sh->alias) {
+        if (!my_strcmp(av[1], "-a")) {
+            rmdict(sh->alias);
+            sh->alias = 0;
+        } else
+            for (int i = 1; i < ac; i++)
+                dict_pop(&sh->alias, av[i]);
+    }
     return sh_setexc(sh, 0);
 }
