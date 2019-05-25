@@ -53,29 +53,13 @@ typedef struct joblist {
     int cnt;
 } joblist_t;
 
-typedef struct redir {
-    char *name;
-    int flags;
-    int in[2];
-    int out[2];
-    int err[2];
-} redir_t;
-
-static const redir_t redirs[] = {
-    {"<", O_RDONLY, {-1, -1}, {-1, -1}, {-1, -1}},
-    {">", O_WRONLY | O_CREAT | O_TRUNC, {-1, -1}, {-1, -1}, {-1, -1}},
-    {">>", O_WRONLY | O_CREAT | O_APPEND, {-1, -1}, {-1, -1}, {-1, -1}},
-    {"2>", O_WRONLY | O_CREAT | O_TRUNC, {-1, -1}, {-1, -1}, {-1, -1}},
-    {"2>>", O_WRONLY | O_CREAT | O_APPEND, {-1, -1}, {-1, -1}, {-1, -1}},
-    {0, 0, {-1, -1}, {-1, -1}, {-1, -1}},
-};
-
 typedef struct sh {
     dict_t *env;
     dict_t *shvar;
     dict_t *alias;
-    redir_t fdt;
     FILE *infd;
+    FILE *outfd;
+    FILE *errfd;
     unsigned char exc;
     bool eof;
 } sh_t;

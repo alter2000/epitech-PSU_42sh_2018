@@ -32,13 +32,10 @@ static void sig_init(void)
 int main(int ac, char **av, char **env)
 {
     sh_t sh = {mkdict(env), NULL, mkdict((char **)builtin_aliases), \
-        {0, 0, {0, O_RDONLY}, {1, O_WRONLY}, {2, O_WRONLY}}, \
-        stdin, 0, false};
-    int ret;
+        stdin, stdout, stderr, 0, false};
 
     sig_init();
     if (ac > 1)
         return noninteractive(ac, av, &sh);
-    ret = loop(&sh);
-    return ret;
+    return loop(&sh);
 }
