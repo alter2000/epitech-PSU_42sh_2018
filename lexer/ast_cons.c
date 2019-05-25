@@ -54,21 +54,24 @@ ast_t *mkast(char *s, sh_t *sh)
 
     if (!sane_input(s))
         return 0;
-    ast = gib(sizeof(*ast));
-    ast->cmd = mkcmd(sh, str_to_tab(uncomment(s), " \t\n"));
-    ast->type = T_EXEC;
+    ast = mknode();
+    ast->name = s;
+    ast->cmd = mkcmd(sh, str_to_tab(s, " \t\n"));
+    /* for (size_t i = 0; EXPR_TOKENS[i]; i++) */
+    /*     if (!token(ast, EXPR_TOKENS[i])) */
+    /*         return rmast(ast); */
+    /* eval_aliases(ast, sh->alias); */
     return ast;
 }
 
-void rmast(ast_t *s)
+ast_t *rmast(ast_t *s)
 {
     ast_t *tmp;
 
     if (!s)
-        return;
+        return 0;
     rmast(s->left);
 
-    free(s->name);
     if (s->cmd)
         rmcmd(s->cmd);
 

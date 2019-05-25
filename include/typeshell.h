@@ -22,10 +22,55 @@ typedef enum MYSHTOK {
     T_REDIR_OUT,
     T_REDIR_IN,
     T_EXEC,
+    T_EXPR,
     T_QUOTE,
     T_DQUOTE,
     T_BACKTICK
 } token_t;
+
+static const char * const EXPR_SEMICOLON[] = {
+    ";",
+    NULL
+};
+
+static const char * const EXPR_BINOP[] = {
+    "&&",
+    "||",
+    NULL
+};
+
+static const char * const EXPR_BG[] = {
+    "&",
+    NULL
+};
+
+static const char * const EXPR_REDIR_OUT[] = {
+    "|",
+    "1>>",
+    "2>>",
+    ">>&",
+    ">>",
+    "1>",
+    "2>",
+    ">&",
+    ">",
+    NULL
+};
+
+static const char * const EXPR_REDIR_IN[] = {
+    "<<",
+    "<",
+    NULL
+};
+
+static const char * const * const EXPR_TOKENS[] = {
+    EXPR_SEMICOLON,
+    EXPR_BINOP,
+    EXPR_BG,
+    EXPR_REDIR_OUT,
+    EXPR_REDIR_IN,
+    0
+};
 
 enum cmd_state {
     STATE_QUOTE,
