@@ -56,5 +56,6 @@ int loop(sh_t *sh)
         parse(curast);
         rmast(curast);
     }
+    rmsh(sh);
     return sh->exc;
 }

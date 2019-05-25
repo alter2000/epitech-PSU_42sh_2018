@@ -40,6 +40,5 @@ int main(int ac, char **av, char **env)
     if (ac > 1)
         return noninteractive(ac, av, &sh);
     ret = loop(&sh);
-    rmsh(&sh);
     return ret;
 }
