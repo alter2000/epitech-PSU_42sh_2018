@@ -21,8 +21,10 @@ ast_t *prompt(sh_t *sh)
     if (isatty(fileno(sh->infd)) && isatty(STDOUT_FILENO))
         my_putstr(SHELL_PS1);
     in = gnugetl(sh->infd);
-    if (!in)
+    if (!in) {
         cmd_exit(1, 0, sh);
+        return 0;
+    }
     if (isatty(fileno(sh->infd)) && isatty(STDOUT_FILENO))
         my_puts("");
     ast = mkast(in, sh);
@@ -32,13 +34,10 @@ ast_t *prompt(sh_t *sh)
 
 int noninteractive(int ac, char **av, sh_t *sh)
 {
-    ast_t *p;
-
     if (ac >= 2 && !my_strcmp(av[1], "-c")) {
         if (ac == 2)
             return sh->exc;
-        p = parse(mkast(av[2], sh));
-        rmast(p);
+        rmast(parse(mkast(av[2], sh)));
     } else
         infile(av[1], sh);
     rmsh(sh);
