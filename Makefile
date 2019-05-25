@@ -10,13 +10,13 @@ CFLAGS+= -Werror -Wall -I./include
 LDFLAGS= -L./lib/my -lmy
 
 DFLAGS+= -Wall -I./include -L./lib/my -lmy -g
-DFLAGS+= -fsanitize=address
+# DFLAGS+= -fsanitize=address
 
 SRC= ./main.c ./path.c ./progflow.c ./dict.c \
 	 ./builtins/aliases.c ./builtins/bi_env.c ./builtins/cd.c \
 	 ./builtins/env.c ./builtins/jobs.c \
 	 ./cmd/cmd.c ./cmd/exec_cmd.c \
-	./lexer/ast_cons.c \
+	./lexer/ast_cons.c ./lexer/token.c \
 	./parser/infile.c ./parser/parse.c
 
 OBJ=$(SRC:.c=.o)

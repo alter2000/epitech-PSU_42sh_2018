@@ -36,6 +36,7 @@ int cmd_jobs(int, char **, sh_t *);
 int change_cwd(sh_t *, char *);
 int cmd_exec(cmd_t *);
 char *get_path(char *, dict_t *);
+void eval_aliases(ast_t *, dict_t *);
 
 /* Environment */
 char *env_get_key(char const *);
@@ -55,9 +56,11 @@ void rmsh(sh_t *);
 /* All parsing functions */
 
 /* AST build/teardown */
+ast_t *mknode(void);
 ast_t *mkast(char *, sh_t *);
-void rmast(ast_t *);
+ast_t *rmast(ast_t *);
 ast_t *parse(ast_t *);
+bool token(ast_t *, char const * const *);
 
 /* Single commands */
 cmd_t *mkcmd(sh_t *, char **);
@@ -67,7 +70,7 @@ bool cmd_builtins(cmd_t *, cmd_t const *);
 
 static inline bool esc(char *str, int idx)
 {
-    return idx != 0 && str[idx - 1] == '\\';
+    return idx > 0 && str[idx - 1] == '\\';
 }
 
 #endif

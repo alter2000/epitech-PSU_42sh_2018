@@ -40,3 +40,7 @@ int cmd_unalias(int ac, char **av, sh_t *sh)
     }
     return sh_setexc(sh, 0);
 }
+
+void eval_aliases(ast_t *ast, dict_t *als)
+{
+}
