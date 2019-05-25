@@ -30,4 +30,5 @@ bool token(ast_t *ast, char const * const *toklist)
         if (tok)
             return split_tok(ast, tok, toklist);
     }
+    return (tok);
 }

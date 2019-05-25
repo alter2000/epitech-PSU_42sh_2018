@@ -71,11 +71,10 @@ ast_t *rmast(ast_t *s)
     if (!s)
         return 0;
     rmast(s->left);
-
     if (s->cmd)
         rmcmd(s->cmd);
-
     tmp = s->right;
     free(s);
     rmast(tmp);
+    return tmp;
 }
