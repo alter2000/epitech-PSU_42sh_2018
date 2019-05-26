@@ -43,7 +43,6 @@ ast_t *mknode(void)
 {
     ast_t *n = gib(sizeof(*n));
 
-    n->name = "NONAME";
     n->type = T_EXPR;
     return n;
 }
@@ -56,11 +55,11 @@ ast_t *mkast(char *s, sh_t *sh)
         return 0;
     ast = mknode();
     ast->name = s;
-    ast->cmd = mkcmd(sh, str_to_tab(s, " \t\n"));
-    /* for (size_t i = 0; EXPR_TOKENS[i]; i++) */
-    /*     if (!token(ast, EXPR_TOKENS[i])) */
-    /*         return rmast(ast); */
-    /* eval_aliases(ast, sh->alias); */
+    /* ast->cmd = mkcmd(sh, str_to_tab(s, " \t\n")); */
+    for (size_t i = 0; EXPR_TOKENS[i]; i++)
+        if (!token(ast, EXPR_TOKENS[i]))
+            return rmast(ast);
+    eval_aliases(ast, sh->alias);
     return ast;
 }
 

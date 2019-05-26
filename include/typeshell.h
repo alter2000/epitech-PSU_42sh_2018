@@ -16,17 +16,46 @@
             {"setenv", "PATH", "/bin:/usr/bin:/usr/local/bin:/usr/sbin", 0})
 
 typedef enum MYSHTOK {
-    T_SEMICOLON,
-    T_BINOP_AND,
-    T_BINOP_OR,
-    T_REDIR_OUT,
-    T_REDIR_IN,
-    T_EXEC,
-    T_EXPR,
-    T_QUOTE,
-    T_DQUOTE,
-    T_BACKTICK
+    T_EXPR = -1,
+    T_SEMICOLON = 0,
+    T_BINOP_AND = 1,
+    T_BINOP_OR = 2,
+    T_JOB_BG = 3,
+    T_PIPE = 4,
+    T_REDIR_OUT_APPEND = 5,
+    T_REDIR_ERR_APPEND = 6,
+    T_REDIR_AMP_APPEND = 7,
+    T_REDIR_APPEND = 8,
+    T_REDIR_OUT = 9,
+    T_REDIR_ERR = 10,
+    T_REDIR_AMP = 11,
+    T_REDIR = 12,
+    T_REDIR_IN_APPEND = 13,
+    T_REDIR_IN = 13,
+    // T_EXEC = 14,
+    // T_QUOTE = 15,
+    // T_DQUOTE = 16,
+    // T_BACKTICK = 17,
 } token_t;
+
+static const char * const MYSHTOK_LIST[] = {
+    ";",
+    "&&",
+    "||",
+    "&",
+    "|",
+    "1>>",
+    "2>>",
+    ">>&",
+    ">>",
+    "1>",
+    "2>",
+    ">&",
+    ">",
+    "<<",
+    "<",
+    NULL
+};
 
 static const char * const EXPR_SEMICOLON[] = {
     ";",

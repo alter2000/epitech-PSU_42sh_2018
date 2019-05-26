@@ -46,8 +46,8 @@ char *my_strstr(char *str, const char *to_find)
 {
     size_t n = my_strlen(to_find);
 
-    while(*str)
-        if(!my_memcmp(str++, to_find, n))
+    while (*str)
+        if (!my_memcmp(str++, to_find, n))
             return str - 1;
     return 0;
 }
