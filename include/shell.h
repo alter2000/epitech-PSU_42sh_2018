@@ -59,8 +59,10 @@ void rmsh(sh_t *);
 ast_t *mknode(void);
 ast_t *mkast(char *, sh_t *);
 ast_t *rmast(ast_t *);
-ast_t *parse(ast_t *);
+int parse(ast_t *, sh_t *);
 bool token(ast_t *, char const * const *);
+bool set_cmds(ast_t *, sh_t *);
+bool syntax(ast_t *);
 
 char *next_tok(char **, char const *);
 
@@ -71,23 +73,23 @@ bool cmd_builtins(cmd_t *, cmd_t const *);
 
 /* Parsing single-use functions */
 
-int parse_out_append(ast_t *, ast_t *);
-int parse_err_append(ast_t *, ast_t *);
-int parse_amp_append(ast_t *, ast_t *);
-int parse_append(ast_t *, ast_t *);
-int parse_in_append(ast_t *, ast_t *);
+int parse_out_append(sh_t *, ast_t *, ast_t *);
+int parse_err_append(sh_t *, ast_t *, ast_t *);
+int parse_amp_append(sh_t *, ast_t *, ast_t *);
+int parse_append(sh_t *, ast_t *, ast_t *);
+int parse_in_append(sh_t *, ast_t *, ast_t *);
 
-int parse_semicolon(ast_t *, ast_t *);
-int parse_and(ast_t *, ast_t *);
-int parse_or(ast_t *, ast_t *);
-int parse_job_bg(ast_t *, ast_t *);
-int parse_pipe(ast_t *, ast_t *);
+int parse_semicolon(sh_t *, ast_t *, ast_t *);
+int parse_and(sh_t *, ast_t *, ast_t *);
+int parse_or(sh_t *, ast_t *, ast_t *);
+int parse_job_bg(sh_t *, ast_t *, ast_t *);
+int parse_pipe(sh_t *, ast_t *, ast_t *);
 
-int parse_err(ast_t *, ast_t *);
-int parse_amp(ast_t *, ast_t *);
-int parse_out_simple(ast_t *, ast_t *);
-int parse_out(ast_t *, ast_t *);
-int parse_in(ast_t *, ast_t *);
+int parse_err(sh_t *, ast_t *, ast_t *);
+int parse_amp(sh_t *, ast_t *, ast_t *);
+int parse_out_simple(sh_t *, ast_t *, ast_t *);
+int parse_out(sh_t *, ast_t *, ast_t *);
+int parse_in(sh_t *, ast_t *, ast_t *);
 
 static inline bool esc(char *str, int idx)
 {
@@ -106,7 +108,7 @@ static const cmd_t BUILTINS[] = {
     { 0, 0, 0, 0, 0 }
 };
 
-static int (* const PARSE_TOKEN[])(ast_t *left, ast_t *right) = {
+static int (* const PARSE_TOKEN[])(sh_t *sh, ast_t *left, ast_t *right) = {
     parse_semicolon,
     parse_and,
     parse_or,

@@ -7,27 +7,27 @@
 
 #include "shell.h"
 
-int parse_semicolon(ast_t *left, ast_t *right)
+int parse_semicolon(sh_t *sh, ast_t *left, ast_t *right)
 {
     return 0;
 }
 
-int parse_and(ast_t *left, ast_t *right)
+int parse_and(sh_t *sh, ast_t *left, ast_t *right)
 {
     return 0;
 }
 
-int parse_or(ast_t *left, ast_t *right)
+int parse_or(sh_t *sh, ast_t *left, ast_t *right)
 {
     return 0;
 }
 
-int parse_job_bg(ast_t *left, ast_t *right)
+int parse_job_bg(sh_t *sh, ast_t *left, ast_t *right)
 {
     return 0;
 }
 
-int parse_pipe(ast_t *left, ast_t *right)
+int parse_pipe(sh_t *sh, ast_t *left, ast_t *right)
 {
     return 0;
 }

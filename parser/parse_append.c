@@ -7,27 +7,27 @@
 
 #include "shell.h"
 
-int parse_out_append(ast_t *left, ast_t *right)
+int parse_out_append(sh_t *sh, ast_t *left, ast_t *right)
 {
     return 0;
 }
 
-int parse_err_append(ast_t *left, ast_t *right)
+int parse_err_append(sh_t *sh, ast_t *left, ast_t *right)
 {
     return 0;
 }
 
-int parse_amp_append(ast_t *left, ast_t *right)
+int parse_amp_append(sh_t *sh, ast_t *left, ast_t *right)
 {
     return 0;
 }
 
-int parse_append(ast_t *left, ast_t *right)
+int parse_append(sh_t *sh, ast_t *left, ast_t *right)
 {
     return 0;
 }
 
-int parse_in_append(ast_t *left, ast_t *right)
+int parse_in_append(sh_t *sh, ast_t *left, ast_t *right)
 {
     return 0;
 }
