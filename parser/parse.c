@@ -17,5 +17,5 @@ int parse(ast_t *ast, sh_t *sh)
         if (!cmd_builtins(ast->cmd, BUILTINS) && ast->cmd->ac)
             cmd_exec(ast->cmd);
     }
-    return 1;
+    return (sh->exc) ? false : true;
 }

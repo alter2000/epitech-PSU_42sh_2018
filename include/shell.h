@@ -14,6 +14,7 @@
     #include "typeshell.h"
 
     #define SHELL_PS1 ("> ")
+    #define SH_SHOWTREE (true)
 
 /* Dictionary manipulation */
 dict_t *mkdict(char **);

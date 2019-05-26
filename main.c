@@ -32,7 +32,7 @@ static void sig_init(void)
 int main(int ac, char **av, char **env)
 {
     sh_t sh = {mkdict(env), NULL, mkdict((char **)builtin_aliases), \
-        stdin, stdout, stderr, 0, false, false};
+        stdin, stdout, stderr, 0, false, SH_SHOWTREE};
 
     sig_init();
     if (ac > 1)
