@@ -58,6 +58,8 @@ ast_t *mkast(char *s, sh_t *sh)
     for (size_t i = 0; EXPR_TOKENS[i]; i++)
         if (!token(ast, EXPR_TOKENS[i]))
             return rmast(ast);
+    if (!set_cmds(ast, sh) || !syntax(ast))
+        return rmast(ast);
     eval_aliases(ast, sh->alias);
     return ast;
 }

@@ -8,9 +8,10 @@
 #ifndef TYPESHELL_H
     #define TYPESHELL_H
 
-    #include <stddef.h>
-    #include <stdbool.h>
     #include <fcntl.h>
+    #include <stdbool.h>
+    #include <stddef.h>
+    #include <stdio.h>
 
     #define DEFAULT_PATH ((char *[]) \
             {"setenv", "PATH", "/bin:/usr/bin:/usr/local/bin:/usr/sbin", 0})
@@ -32,10 +33,11 @@ typedef enum MYSHTOK {
     T_REDIR = 12,
     T_REDIR_IN_APPEND = 13,
     T_REDIR_IN = 13,
-    // T_EXEC = 14,
-    // T_QUOTE = 15,
-    // T_DQUOTE = 16,
-    // T_BACKTICK = 17,
+    /*
+        T_QUOTE = 14,
+        T_DQUOTE = 15,
+        T_BACKTICK = 16,
+    */
 } token_t;
 
 static const char * const MYSHTOK_LIST[] = {
@@ -136,6 +138,7 @@ typedef struct sh {
     FILE *errfd;
     unsigned char exc;
     bool eof;
+    bool showtree;
 } sh_t;
 
 typedef struct cmd {
