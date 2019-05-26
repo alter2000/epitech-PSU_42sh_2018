@@ -13,11 +13,12 @@ DFLAGS+= -Wall -I./include -L./lib/my -lmy -g
 # DFLAGS+= -fsanitize=address
 
 SRC= ./main.c ./path.c ./progflow.c ./dict.c \
-	 ./builtins/aliases.c ./builtins/bi_env.c ./builtins/cd.c \
-	 ./builtins/env.c ./builtins/jobs.c \
-	 ./cmd/cmd.c ./cmd/exec_cmd.c \
-	./lexer/ast_cons.c ./lexer/token.c \
-	./parser/infile.c ./parser/parse.c
+	./builtins/aliases.c ./builtins/bi_env.c ./builtins/cd.c \
+	./builtins/env.c ./builtins/jobs.c \
+	./cmd/cmd.c ./cmd/exec_cmd.c \
+	./lexer/ast_cons.c ./lexer/token.c ./lexer/helpers_token.c \
+	./parser/infile.c ./parser/parse.c ./parser/parse_append.c \
+	./parser/parse_binop.c ./parser/parse_last.c
 
 OBJ=$(SRC:.c=.o)
 
