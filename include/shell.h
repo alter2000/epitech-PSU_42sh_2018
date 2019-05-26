@@ -1,3 +1,4 @@
+
 /*
 ** EPITECH PROJECT, 2019
 ** PSU_minishell_2018
@@ -14,7 +15,7 @@
     #include "typeshell.h"
 
     #define SHELL_PS1 ("> ")
-    #define SH_SHOWTREE (true)
+    #define SH_SHOWTREE (false)
 
 /* Dictionary manipulation */
 dict_t *mkdict(char **);
