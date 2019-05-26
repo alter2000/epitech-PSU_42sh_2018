@@ -55,25 +55,9 @@ ast_t *mkast(char *s, sh_t *sh)
         return 0;
     ast = mknode();
     ast->name = s;
-    /* ast->cmd = mkcmd(sh, str_to_tab(s, " \t\n")); */
     for (size_t i = 0; EXPR_TOKENS[i]; i++)
         if (!token(ast, EXPR_TOKENS[i]))
             return rmast(ast);
     eval_aliases(ast, sh->alias);
     return ast;
-}
-
-ast_t *rmast(ast_t *s)
-{
-    ast_t *tmp;
-
-    if (!s)
-        return 0;
-    rmast(s->left);
-    if (s->cmd)
-        rmcmd(s->cmd);
-    tmp = s->right;
-    free(s);
-    rmast(tmp);
-    return tmp;
 }

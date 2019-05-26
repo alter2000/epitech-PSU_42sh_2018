@@ -10,12 +10,17 @@
 
 static char const *scan_toklist(char *name, char const * const *toklist)
 {
+    char quote = 0;
+
     for (size_t i = 0; name[i]; i++) {
-        if (is_in(name[i], "\"'") && !esc(name, i))
-            for (char q = name[i]; name[i] && name[i + 1] != q \
-                    && !esc(name, i + 1); i++);
+        if (is_in(name[i], "\"'") != -1 && !esc(name, i)) {
+            quote = name[i];
+            do {
+                ++i;
+            } while (name[i] && (name[i] != quote || esc(name, i)));
+        }
         for (size_t j = 0; toklist[j]; j++)
-            if (!my_strncmp(name + i, toklist[j], my_strlen(toklist[j])) \
+            if (!strncmp(name + i, toklist[j], my_strlen(toklist[j])) \
                     && !esc(name, i))
                 return toklist[j];
     }
@@ -61,5 +66,5 @@ bool token(ast_t *ast, char const * const *toklist)
         if (tok)
             return split_tok(ast, tok, toklist);
     }
-    return tok;
+    return true;
 }
