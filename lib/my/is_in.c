@@ -26,15 +26,30 @@ size_t my_strpn(char const *str, char const *check, bool cspn)
     return sc - str;
 }
 
+int my_memcmp(const void *s1, const void *s2, size_t n)
+{
+    const unsigned char *p1 = s1;
+    const unsigned char *p2 = s2;
+
+    if (!p1 || !p2)
+        return 0;
+    while (n--)
+        if (*p1 == *p2) {
+            p1++;
+            p2++;
+        } else
+            return *p1 - *p2;
+    return 0;
+}
+
 char *my_strstr(char *str, const char *to_find)
 {
-    if (!*str)
-        return 0;
-    if (!*to_find)
-        return str;
-    if ((*str == *to_find) && (!my_strcmp(str, to_find)))
-        return str;
-    return my_strstr(str + 1, to_find);
+    size_t n = my_strlen(to_find);
+
+    while(*str)
+        if(!my_memcmp(str++, to_find, n))
+            return str - 1;
+    return 0;
 }
 
 int my_isspace(char const ch)

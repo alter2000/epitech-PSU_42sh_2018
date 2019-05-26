@@ -167,6 +167,7 @@ void *gib(size_t);
 void *regib(char *, int);
 void *my_memcpy(void *, const void *, size_t);
 void *my_memmove(void *, const void *, size_t);
+int my_memcmp(const void *, const void *, size_t);
 
 char *my_strtok(char *, char const *);
 char *my_strsep(char **p, char const *);
