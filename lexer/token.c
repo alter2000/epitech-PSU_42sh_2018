@@ -12,7 +12,8 @@ static char const *scan_toklist(char *name, char const * const *toklist)
 {
     for (size_t i = 0; name[i]; i++) {
         if (is_in(name[i], "\"'") && !esc(name, i))
-            for (char q = name[i]; name[i + 1] != q && !esc(name, i + 1); i++);
+            for (char q = name[i]; name[i] && name[i + 1] != q \
+                    && !esc(name, i + 1); i++);
         for (size_t j = 0; toklist[j]; j++)
             if (!my_strncmp(name + i, toklist[j], my_strlen(toklist[j])) \
                     && !esc(name, i))

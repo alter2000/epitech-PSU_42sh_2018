@@ -75,6 +75,13 @@ char *gnugetl(FILE *fd)
     size_t n = 0;
     char *buf = 0;
     ssize_t ret = getline(&buf, &n, fd);
+    size_t i = 0;
 
-    return (ret < 0) ? 0 : buf;
+    if (ret >= 0) {
+        for (; buf && buf[i]; i++)
+            if (buf[i] == '\n')
+                buf[i] = 0;
+        return buf;
+    }
+    return 0;
 }
